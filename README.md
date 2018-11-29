@@ -1,1 +1,1 @@
-# Parallel-RayTracer
+# Parallel_RayTracer
