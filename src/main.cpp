@@ -1,8 +1,11 @@
-#include <iostream>
+#include "Application.h"
 
 int main()
 {
-	std::cout << "bich" << std::endl;
+	Application app;
 
-	getchar();
+	app.Initialise();
+	app.Loop();
+
+	return 0;
 }

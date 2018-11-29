@@ -21,7 +21,25 @@ endif()
 
 
 add_executable(RayTracer_Parallel
+ src/Application.h
+ src/Program.h
+ src/RayTracer.h
+ src/Geometry.h
+ src/Camera.h
+ src/Object.h
+ src/Sphere.h
+ src/Input.h
+ src/Window.h
+
  src/main.cpp
+ src/Application.cpp
+ src/RayTracer.cpp
+ src/Geometry.cpp
+ src/Camera.cpp
+ src/Object.cpp
+ src/Sphere.cpp
+ src/Input.cpp
+ src/Window.cpp
 )
 
 target_link_libraries(RayTracer_Parallel SDL2)
