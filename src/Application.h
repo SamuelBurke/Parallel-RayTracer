@@ -1,7 +1,13 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
-#include "Program.h"
+#include <memory>
+
+class Camera;
+class Input;
+class Object;
+class Window;
+class RayTracer;
 
 class Application
 {
@@ -13,8 +19,11 @@ public:
 private:
 	bool m_quit;
 
-	Input m_input;
-	Window m_window;
+	std::shared_ptr<Camera> m_camera;
+	std::shared_ptr<Input> m_input;
+	std::shared_ptr<Object> m_object;
+	std::shared_ptr<RayTracer> m_rayTracer;
+	std::shared_ptr<Window> m_window;
 
 };
 
