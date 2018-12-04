@@ -17,10 +17,14 @@ private:
 
 	std::shared_ptr<Camera> m_camera;
 	std::shared_ptr<Input> m_input;
-	std::shared_ptr<RayTracer> m_rayTracer;
 	std::shared_ptr<Window> m_window;
+	//std::shared_ptr<RayTracer> m_rayTracer;
 
-	Sphere m_sphere;
+	RayTracer m_rayTracer;
+
+	//Sphere m_sphere;
+	std::shared_ptr<Sphere> m_sphere;
+	std::shared_ptr<Sphere> m_sphere2;
 
 };
 

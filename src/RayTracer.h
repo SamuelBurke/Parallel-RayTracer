@@ -18,8 +18,12 @@ public:
 
 	void AddObject(std::shared_ptr<Object> _object);
 
+	void Debug();
+
 private:
 	std::vector<std::shared_ptr<Object>> m_objects;
+
+	float m_blue;
 };
 
 #endif // !RAYTRACER_H

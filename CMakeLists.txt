@@ -29,6 +29,7 @@ add_executable(RayTracer_Parallel
  src/Camera.h
  src/Object.h
  src/Sphere.h
+ src/Geometry.h
  src/Input.h
  src/Window.h
 
@@ -39,6 +40,7 @@ add_executable(RayTracer_Parallel
  src/Camera.cpp
  src/Object.cpp
  src/Sphere.cpp
+ src/Geometry.cpp
  src/Input.cpp
  src/Window.cpp
 )

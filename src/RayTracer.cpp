@@ -1,9 +1,11 @@
 #include "RayTracer.h"
 #include "Object.h"
 
+#include <iostream>
+
 RayTracer::RayTracer()
 {
-
+	m_blue = 0.109375f;
 }
 
 // Will test the incoming ray against all objects in the scene.
@@ -22,7 +24,7 @@ glm::vec3 RayTracer::TraceRay(std::shared_ptr<Ray> _ray)
 
 	// If the ray didn't hit an object:
 	// Just return a background colour, as done below:
-	glm::vec3 bkgcolour = glm::vec3(0, 0, 28);
+	glm::vec3 bkgcolour = glm::vec3(0, 0, m_blue);
 	colour = bkgcolour;
 
 	return colour;
@@ -31,4 +33,9 @@ glm::vec3 RayTracer::TraceRay(std::shared_ptr<Ray> _ray)
 void RayTracer::AddObject(std::shared_ptr<Object> _object)
 {
 	m_objects.push_back(_object);
+}
+
+void RayTracer::Debug()
+{
+	std::cout << m_objects.size() << std::endl;
 }
