@@ -1,5 +1,4 @@
 #include "Application.h"
-#include "Program.h"
 
 #include <iostream>
 
@@ -9,9 +8,14 @@ void Application::Initialise()
 
 	m_camera = std::make_shared<Camera>();
 	m_input = std::make_shared<Input>();
-	m_object = std::make_shared<Object>();
 	m_rayTracer = std::shared_ptr<RayTracer>();
 	m_window = std::make_shared<Window>();
+
+	m_sphere.SetPosition(glm::vec3(0, 0, -50.0f));
+	m_sphere.SetRadius(10.0f);
+	m_sphere.SetColour(glm::vec3(255, 0, 0));
+
+	//m_rayTracer->AddObject(&m_sphere);
 
 	m_window->InitWindow();
 }

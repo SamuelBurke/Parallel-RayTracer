@@ -1,4 +1,5 @@
 #include "RayTracer.h"
+#include "Object.h"
 
 RayTracer::RayTracer()
 {
@@ -25,4 +26,9 @@ glm::vec3 RayTracer::TraceRay(std::shared_ptr<Ray> _ray)
 	colour = bkgcolour;
 
 	return colour;
+}
+
+void RayTracer::AddObject(std::shared_ptr<Object> _object)
+{
+	m_objects.push_back(_object);
 }

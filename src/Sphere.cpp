@@ -21,6 +21,22 @@ glm::vec3 Sphere::Shade(std::shared_ptr<Ray> _ray, glm::vec3(_intersection))
 	return colour;
 }
 
+void Sphere::SetPosition(glm::vec3 _position)
+{
+	m_position = _position;
+}
+
+void Sphere::SetRadius(float _radius)
+{
+	m_radius = _radius;
+}
+
+void Sphere::SetColour(glm::vec3 _colour)
+{
+	m_colour = _colour;
+}
+
+// PUT IN GEOMETRY CLASS
 // Need three functions:
 // Function to get the closest point on a line.
 // Takes a ray, a 3D query point, returns a 3D point.
@@ -51,6 +67,8 @@ glm::vec3 Sphere::Shade(std::shared_ptr<Ray> _ray, glm::vec3(_intersection))
 // Work out the distance from the closest point on the line to the sphere's centre.
 // Perform the three checks.
 // (work out and return actual intersection points).
+
+
 
 // Function to get the normal of a sphere
 // Takes a sphere centre and a 3D sample point. Returns a 3D direction vector.
