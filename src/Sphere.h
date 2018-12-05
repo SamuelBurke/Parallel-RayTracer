@@ -19,6 +19,10 @@ public:
 	void SetRadius(float _radius);
 	void SetColour(glm::vec3 _colour);
 
+	glm::vec3 GetPosition();
+	float GetRadius();
+	glm::vec3 GetColour();
+
 private:
 	glm::vec3 m_position;
 	float m_radius;

@@ -1,9 +1,12 @@
 #include "Geometry.h"
 #include "Ray.h"
+//#include "Object.h"
+#include "Sphere.h"
+
+#include <iostream>
 
 Geometry::Geometry()
 {
-
 }
 
 // Need three functions:
@@ -26,9 +29,43 @@ glm::vec3 Geometry::ClosestPoint(std::shared_ptr<Ray> _ray, glm::vec3 _query)
 	return _query;
 }
 
+bool Geometry::Intersection(std::shared_ptr<Sphere> _object, glm::vec3 &_rayOrigin, glm::vec3 &_rayDirection)
+{
+	glm::vec3 position = _object->GetPosition();
+	float radius = _object->GetRadius();
+
+	//a = origin of ray
+	//n = unit vector, direction of ray
+	//P = centre of position in object
+	//r = radius of sphere
+
+	//d = distance from the centre of the sphere to the closest point 
+	//x = closest point on the ray line to the point P - perpendicular to it.
+
+	float projectedVector = glm::dot((position - _rayOrigin), _rayDirection);
+	//(P - a).n
+	//This gives us the length along the line to the closest point
 
 
 
+	return false;
+}
+
+bool Geometry::RaySphereIntersection(std::shared_ptr<Ray> _ray, glm::vec3 _sphereCentre, float _radius)
+{
+	float projectedVector = glm::dot((_sphereCentre - _ray->m_origin), _ray->m_direction);
+
+
+	float distance = glm::length(_sphereCentre - _ray->m_origin - (projectedVector)* _ray->m_direction);
+
+	if (distance > _radius)
+	{
+		//return Intersection();
+		return true;
+	}
+
+	return false;
+}
 
 // Function to calculate Ray-sphere intersection.
 // Takes a ray, sphere centre, and radius. Returns whether it hit or not, and distance to hit.

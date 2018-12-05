@@ -5,8 +5,10 @@
 #include <memory>
 #include <vector>
 
-class Object;
+//class Object;
+class Sphere;
 class Ray;
+class Geometry;
 // Keeps track of all objects in the scene.
 // Routine 'trace ray' test ray against all objects in scene, returns pixel colour.
 class RayTracer
@@ -16,12 +18,14 @@ public:
 
 	glm::vec3 TraceRay(std::shared_ptr<Ray> _ray);
 
-	void AddObject(std::shared_ptr<Object> _object);
+	void AddObject(std::shared_ptr<Sphere> _object);
 
 	void Debug();
 
 private:
-	std::vector<std::shared_ptr<Object>> m_objects;
+	std::vector<std::shared_ptr<Sphere>> m_objects;
+
+	std::shared_ptr<Geometry> m_geometry;
 
 	float m_blue;
 };

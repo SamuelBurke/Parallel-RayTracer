@@ -2,9 +2,9 @@
 
 Sphere::Sphere()
 {
-	m_radius = 50.0f;
-	m_position = glm::vec3(0, 0, -10.0f);
-	m_colour = glm::vec3(255, 0, 0);
+	//m_radius = 50.0f;
+	//m_position = glm::vec3(0, 0, -10.0f);
+	//m_colour = glm::vec3(255, 0, 0);
 }
 
 glm::vec3 Sphere::Shade(std::shared_ptr<Ray> _ray, glm::vec3(_intersection))
@@ -34,4 +34,19 @@ void Sphere::SetRadius(float _radius)
 void Sphere::SetColour(glm::vec3 _colour)
 {
 	m_colour = _colour;
+}
+
+glm::vec3 Sphere::GetPosition()
+{
+	return m_position;
+}
+
+float Sphere::GetRadius()
+{
+	return m_radius;
+}
+
+glm::vec3 Sphere::GetColour()
+{
+	return m_colour;
 }
