@@ -12,59 +12,73 @@ Geometry::Geometry()
 // Need three functions:
 glm::vec3 Geometry::ClosestPoint(std::shared_ptr<Ray> _ray, glm::vec3 _query)
 {
-// Function to get the closest point on a line.
-// Takes a ray, a 3D query point, returns a 3D point.
-// Can express the closest point (X) on the line to a query point (P) as:
-// X = a+((P-a).n)n
-// The vector from X to P is:
-// P - X
-// Can take the radius(R) of the sphere.
-//
-// If ||P - X|| <= R  --- The || means the length, magnitude or norm of a vector.
-//		Ray intersects with the sphere.
-// Else
-//		Ray does not intersect with the sphere.
+	glm::vec3 point = _query;
 
+	// Function to get the closest point on a line.
+	// Takes a ray, a 3D query point, returns a 3D point.
+	// Can express the closest point (X) on the line to a query point (P) as:
+	// X = a+((P-a).n)n
+	// The vector from X to P is:
+	// P - X
+	// Can take the radius(R) of the sphere.
+	//
+	// If ||P - X|| <= R  --- The || means the length, magnitude or norm of a vector.
+	//		Ray intersects with the sphere.
+	// Else
+	//		Ray does not intersect with the sphere.
 
-	return _query;
-}
-
-bool Geometry::Intersection(std::shared_ptr<Sphere> _object, glm::vec3 &_rayOrigin, glm::vec3 &_rayDirection)
-{
-	glm::vec3 position = _object->GetPosition();
-	float radius = _object->GetRadius();
-
-	//a = origin of ray
-	//n = unit vector, direction of ray
-	//P = centre of position in object
-	//r = radius of sphere
-
-	//d = distance from the centre of the sphere to the closest point 
-	//x = closest point on the ray line to the point P - perpendicular to it.
-
-	float projectedVector = glm::dot((position - _rayOrigin), _rayDirection);
+	
 	//(P - a).n
-	//This gives us the length along the line to the closest point
+	// Where:
+	//	a = Origin of ray
+	//	n = Direction of ray, unit vector
+	//	P = position vector. In this case, it's of the query point passed in here.
+	// This gives us the length along the line to the closest point
+	float projectedVector = glm::dot((point - _ray->m_origin), _ray->m_direction);
 
+	// projectedVector gives us a scalar value. If we want a vector to the closest point, it is this distance along the n.
+	// So, just multiply it by n
+	//result = projectedVector * rayDirection;
 
+	// This means we can now express the closest point X on the line to our query point P as:
+	glm::vec3 X = _ray->m_origin + (projectedVector * _ray->m_direction);
+	
 
-	return false;
+	// We can also easily find the vector from X on the line to the point described by P.
+	// P - a - ((P - a).n)n 
+	// The shortest distance d is thereform the magnitude of this vector:
+	// d = ||P - a - ((P - a).n)n||
+	float d = glm::length(point - _ray->m_origin - (projectedVector * _ray->m_direction));
+
+	return X;
 }
+
 
 bool Geometry::RaySphereIntersection(std::shared_ptr<Ray> _ray, glm::vec3 _sphereCentre, float _radius)
 {
 	float projectedVector = glm::dot((_sphereCentre - _ray->m_origin), _ray->m_direction);
-
-
 	float distance = glm::length(_sphereCentre - _ray->m_origin - (projectedVector)* _ray->m_direction);
 
+	
+
+	// No intersection.
 	if (distance > _radius)
 	{
-		//return Intersection();
+		return false;
+	}
+
+	// One intersection points.
+	if (distance = _radius)
+	{
+		return true;
+	}	
+
+	// Two intersection points.
+	if (distance < _radius)
+	{
 		return true;
 	}
 
-	return false;
 }
 
 // Function to calculate Ray-sphere intersection.

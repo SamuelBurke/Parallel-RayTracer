@@ -25,9 +25,10 @@ glm::vec3 RayTracer::TraceRay(std::shared_ptr<Ray> _ray)
 
 	for (size_t i = 0; i < m_objects.size(); i++)
 	{
-		if (m_geometry->Intersection(m_objects[i], _ray->m_origin, _ray->m_direction))
+		if (m_geometry->RaySphereIntersection(_ray, m_objects.at(i)->GetPosition(), m_objects.at(i)->GetRadius()))
 		{
-			colour = glm::vec3(1, 0, 0);
+			colour = m_objects.at(i)->GetColour();
+			break;
 		}
 		else
 		{

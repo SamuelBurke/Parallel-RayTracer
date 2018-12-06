@@ -23,8 +23,10 @@ private:
 	RayTracer m_rayTracer;
 
 	//Sphere m_sphere;
+	//Sphere m_sphere2;
+
 	std::shared_ptr<Sphere> m_sphere;
-	//std::shared_ptr<Sphere> m_sphere2;
+	std::shared_ptr<Sphere> m_sphere2;
 
 };
 
