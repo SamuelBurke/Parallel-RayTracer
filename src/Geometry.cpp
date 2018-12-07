@@ -4,6 +4,7 @@
 #include "Sphere.h"
 
 #include <iostream>
+#include <cmath>
 
 Geometry::Geometry()
 {
@@ -26,7 +27,6 @@ glm::vec3 Geometry::ClosestPoint(std::shared_ptr<Ray> _ray, glm::vec3 _query)
 	//		Ray intersects with the sphere.
 	// Else
 	//		Ray does not intersect with the sphere.
-
 	
 	//(P - a).n
 	// Where:
@@ -48,7 +48,7 @@ glm::vec3 Geometry::ClosestPoint(std::shared_ptr<Ray> _ray, glm::vec3 _query)
 	// P - a - ((P - a).n)n 
 	// The shortest distance d is thereform the magnitude of this vector:
 	// d = ||P - a - ((P - a).n)n||
-	float d = glm::length(point - _ray->m_origin - (projectedVector * _ray->m_direction));
+	//float d = glm::length(point - _ray->m_origin - (projectedVector * _ray->m_direction));
 
 	return X;
 }
@@ -57,27 +57,53 @@ glm::vec3 Geometry::ClosestPoint(std::shared_ptr<Ray> _ray, glm::vec3 _query)
 bool Geometry::RaySphereIntersection(std::shared_ptr<Ray> _ray, glm::vec3 _sphereCentre, float _radius)
 {
 	float projectedVector = glm::dot((_sphereCentre - _ray->m_origin), _ray->m_direction);
-	float distance = glm::length(_sphereCentre - _ray->m_origin - (projectedVector)* _ray->m_direction);
+	float distance = glm::length(_sphereCentre - _ray->m_origin - projectedVector * _ray->m_direction);
 
-	
+	float x = sqrt((pow(_radius, 2) - (pow(distance, 2))));
 
-	// No intersection.
-	if (distance > _radius)
+	glm::vec3 firstIntersection = _ray->m_origin + (projectedVector - x) * _ray->m_direction;
+
+	std::cout << firstIntersection.x << firstIntersection.y << firstIntersection.z << std::endl;
+
+
+	glm::vec3 X = ClosestPoint(_ray, _sphereCentre);
+
+	if (glm::length(_sphereCentre - X) > _radius)
 	{
 		return false;
 	}
 
-	// One intersection points.
-	if (distance = _radius)
-	{
-		return true;
-	}	
-
-	// Two intersection points.
-	if (distance < _radius)
+	if (glm::length(_sphereCentre - X) == _radius)
 	{
 		return true;
 	}
+
+	if (glm::length(_sphereCentre - X) < _radius)
+	{
+		return true;
+	}
+
+
+	//if (glm::length(_sphereCentre - ) )
+
+
+	//// No intersection.
+	//if (distance > _radius)
+	//{
+	//	return false;
+	//}
+
+	//// One intersection points.
+	//if (distance = _radius)
+	//{
+	//	return true;
+	//}	
+
+	//// Two intersection points.
+	//if (distance < _radius)
+	//{
+	//	return true;
+	//}
 
 }
 
