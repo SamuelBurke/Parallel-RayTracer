@@ -54,16 +54,42 @@ glm::vec3 Geometry::ClosestPoint(std::shared_ptr<Ray> _ray, glm::vec3 _query)
 }
 
 
+// Function to calculate Ray-sphere intersection.
+// Takes a ray, sphere centre, and radius. Returns whether it hit or not, and distance to hit.
+// (use a stucture or class to combine these potentially)
+// Ray-Sphere needs to:
+// First, check if ray origin is inside the sphere.
+// (if it is, treat as an error and say there is not intersection).
+// Then, find the closest point on the ray to the centre of the sphere. (Use function above).
+// Check if the closest point is in front of or behind the ray's origin/direction.
+// (reject if intersection is behind the ray's origin and direction points away from it).
+// (prevents drawing objects that are behind the camera).
+// Work out the distance from the closest point on the line to the sphere's centre.
+// Perform the three checks.
+// (work out and return actual intersection points).
 bool Geometry::RaySphereIntersection(std::shared_ptr<Ray> _ray, glm::vec3 _sphereCentre, float _radius)
 {
+	//Check if ray origin is inside the sphere.
+	//if (_ray->m_origin.x == (_sphereCentre.x + _radius))
+	//{
+	//	return false;
+	//}
+
+
+
+
+
 	float projectedVector = glm::dot((_sphereCentre - _ray->m_origin), _ray->m_direction);
 	float distance = glm::length(_sphereCentre - _ray->m_origin - projectedVector * _ray->m_direction);
 
-	float x = sqrt((pow(_radius, 2) - (pow(distance, 2))));
 
-	glm::vec3 firstIntersection = _ray->m_origin + (projectedVector - x) * _ray->m_direction;
 
-	std::cout << firstIntersection.x << firstIntersection.y << firstIntersection.z << std::endl;
+
+	float x = 0;
+	x = sqrt((pow(_radius, 2) - (pow(distance, 2))));
+
+	///glm::vec3 firstIntersection = _ray->m_origin + (projectedVector - x) * _ray->m_direction;
+	///std::cout << firstIntersection.x << " " << firstIntersection.y << " " << firstIntersection.z << std::endl;
 
 
 	glm::vec3 X = ClosestPoint(_ray, _sphereCentre);
@@ -99,29 +125,9 @@ bool Geometry::RaySphereIntersection(std::shared_ptr<Ray> _ray, glm::vec3 _spher
 	//	return true;
 	//}	
 
-	//// Two intersection points.
-	//if (distance < _radius)
-	//{
-	//	return true;
-	//}
+
 
 }
-
-// Function to calculate Ray-sphere intersection.
-// Takes a ray, sphere centre, and radius. Returns whether it hit or not, and distance to hit.
-// (use a stucture or class to combine these potentially)
-// Ray-Sphere needs to:
-// First, check if ray origin is inside the sphere.
-// (if it is, treat as an error and say there is not intersection).
-// Then, find the closest point on the ray to the centre of the sphere. (Use function above).
-// Check if the closest point is in front of or behind the ray's origin/direction.
-// (reject if intersection is behind the ray's origin and direction points away from it).
-// (prevents drawing objects that are behind the camera).
-// Work out the distance from the closest point on the line to the sphere's centre.
-// Perform the three checks.
-// (work out and return actual intersection points).
-
-
 
 // Function to get the normal of a sphere
 // Takes a sphere centre and a 3D sample point. Returns a 3D direction vector.
