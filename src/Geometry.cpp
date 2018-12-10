@@ -1,6 +1,5 @@
 #include "Geometry.h"
 #include "Ray.h"
-//#include "Object.h"
 #include "Sphere.h"
 
 #include <iostream>
@@ -9,6 +8,28 @@
 Geometry::Geometry()
 {
 }
+
+bool Geometry::Intersect(std::shared_ptr<Ray> _ray, float &_t, glm::vec3 _sphereCentre, float _radius)
+{
+	glm::vec3 originToCentre = _ray->m_origin - _sphereCentre;
+	float b = 2 * glm::dot(originToCentre, _ray->m_direction);
+	float c = glm::dot(originToCentre, originToCentre) - _radius * _radius;
+
+	float distanceToCentre = b * b - 4 * c;
+	if (distanceToCentre < 1e-4)
+	{
+		return false;
+	}
+
+	distanceToCentre = sqrt(distanceToCentre);
+
+	float t0 = -b - distanceToCentre;
+	float t1 = -b + distanceToCentre;
+
+	_t = (t0 < t1) ? t0 : t1;
+	return true;
+}
+
 
 // Need three functions:
 glm::vec3 Geometry::ClosestPoint(std::shared_ptr<Ray> _ray, glm::vec3 _query)
@@ -67,67 +88,48 @@ glm::vec3 Geometry::ClosestPoint(std::shared_ptr<Ray> _ray, glm::vec3 _query)
 // Work out the distance from the closest point on the line to the sphere's centre.
 // Perform the three checks.
 // (work out and return actual intersection points).
-bool Geometry::RaySphereIntersection(std::shared_ptr<Ray> _ray, glm::vec3 _sphereCentre, float _radius)
-{
-	//Check if ray origin is inside the sphere.
-	//if (_ray->m_origin.x == (_sphereCentre.x + _radius))
-	//{
-	//	return false;
-	//}
 
-
-
-
-
-	float projectedVector = glm::dot((_sphereCentre - _ray->m_origin), _ray->m_direction);
-	float distance = glm::length(_sphereCentre - _ray->m_origin - projectedVector * _ray->m_direction);
-
-
-
-
-	float x = 0;
-	x = sqrt((pow(_radius, 2) - (pow(distance, 2))));
-
-	///glm::vec3 firstIntersection = _ray->m_origin + (projectedVector - x) * _ray->m_direction;
-	///std::cout << firstIntersection.x << " " << firstIntersection.y << " " << firstIntersection.z << std::endl;
-
-
-	glm::vec3 X = ClosestPoint(_ray, _sphereCentre);
-
-	if (glm::length(_sphereCentre - X) > _radius)
-	{
-		return false;
-	}
-
-	if (glm::length(_sphereCentre - X) == _radius)
-	{
-		return true;
-	}
-
-	if (glm::length(_sphereCentre - X) < _radius)
-	{
-		return true;
-	}
-
-
-	//if (glm::length(_sphereCentre - ) )
-
-
-	//// No intersection.
-	//if (distance > _radius)
-	//{
-	//	return false;
-	//}
-
-	//// One intersection points.
-	//if (distance = _radius)
-	//{
-	//	return true;
-	//}	
-
-
-
-}
+//bool Geometry::RaySphereIntersection(std::shared_ptr<Ray> _ray, glm::vec3 _sphereCentre, float _radius)
+//{
+// 	//Check if ray origin is inside the sphere. //////////DOES NOT WORK/////////////
+//	glm::vec3 outerSphere = _sphereCentre + _radius;
+//	glm::vec3 innerSphere = _sphereCentre - _radius;
+//
+//	if (_ray->m_origin.x > outerSphere.x && _ray->m_origin.x < innerSphere.x ||
+//		_ray->m_origin.y > outerSphere.y && _ray->m_origin.y < innerSphere.y ||
+//		_ray->m_origin.z > outerSphere.z && _ray->m_origin.z < innerSphere.z)
+//	{
+//		return false;
+//	}
+//
+//	glm::vec3 X = ClosestPoint(_ray, _sphereCentre);
+//
+//	// CHECK IF CLOSESTPOINT IS BEHIND THE RAY'S ORIGIN/DIRECTION
+//	// REJECT IF INTERSECTION IS BEHIND THE RAY'S ORIGIN AND THE DIRECTION POINTS AWAY FROM IT.
+//
+//	// No intersection points.
+//	if (glm::length(_sphereCentre - X) > _radius)
+//	{
+//		return false;
+//	}
+//
+//	// One intersection point.
+//	if (glm::length(_sphereCentre - X) == _radius)
+//	{
+//		return true;
+//	}
+//
+//	// Two intersection points.
+//	if (glm::length(_sphereCentre - X) < _radius)
+//	{
+//		return true;
+//	}
+//
+//	
+//
+//
+//
+//}
 
 // Function to get the normal of a sphere
 // Takes a sphere centre and a 3D sample point. Returns a 3D direction vector.

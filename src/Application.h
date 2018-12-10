@@ -27,6 +27,9 @@ private:
 
 	std::shared_ptr<Sphere> m_sphere;
 	std::shared_ptr<Sphere> m_sphere2;
+	std::shared_ptr<Sphere> m_debugSphere;
+
+	//std::shared_ptr<Sphere> m_lightSphere;
 
 };
 

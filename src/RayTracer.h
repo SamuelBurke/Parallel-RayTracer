@@ -17,6 +17,7 @@ public:
 	RayTracer();
 
 	glm::vec3 TraceRay(std::shared_ptr<Ray> _ray);
+	void ClampColour(glm::vec3 &_col);
 
 	void AddObject(std::shared_ptr<Sphere> _object);
 

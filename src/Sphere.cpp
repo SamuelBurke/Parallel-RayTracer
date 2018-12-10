@@ -21,6 +21,11 @@ glm::vec3 Sphere::Shade(std::shared_ptr<Ray> _ray, glm::vec3(_intersection))
 	return colour;
 }
 
+glm::vec3 Sphere::GetNormal(glm::vec3 _pi)
+{
+	return (_pi - m_position) / m_radius;
+}
+
 void Sphere::SetPosition(glm::vec3 _position)
 {
 	m_position = _position;

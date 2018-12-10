@@ -23,6 +23,8 @@ public:
 	float GetRadius();
 	glm::vec3 GetColour();
 
+	glm::vec3 GetNormal(glm::vec3 _pi);
+
 private:
 	glm::vec3 m_position;
 	float m_radius;
