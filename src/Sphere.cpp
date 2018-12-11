@@ -1,24 +1,36 @@
 #include "Sphere.h"
+#include "Ray.h"
 
 Sphere::Sphere()
 {
-	//m_radius = 50.0f;
-	//m_position = glm::vec3(0, 0, -10.0f);
-	//m_colour = glm::vec3(255, 0, 0);
 }
 
 glm::vec3 Sphere::Shade(std::shared_ptr<Ray> _ray, glm::vec3(_intersection))
 {
-	// This function takes a ray and a vec3 intersection point.
-	// Returns a colour.
-	// Set this function to return a specific value, e.g. red.
-	// Handled colours as between 0-1 in the function and convert to between 0-255 as need when writing the final pixel colour to screen.
-	// Will make the maths a lot easier when proper shading.
-	// Will change this function to eventually perform actual shading.
-
 	glm::vec3 colour = glm::vec3(0, 0, 0);
+	//float specularIntensity = 1.0f;
+	//float ambientStength = 0.1f;
 
-	return colour;
+	//ambient
+	//glm::vec3 ambient = ambientStength * m_colour;
+	glm::vec3 lightDirection = glm::vec3(0.0f, 0.0f, 0.0f) - _intersection; // The vector here is the light's origin point. -pi in order to get the direction of the light.
+	glm::vec3 normal = GetNormal(_intersection);
+
+	//diffuse
+	float dt = glm::dot(glm::normalize(lightDirection), glm::normalize(normal));
+	//float diffuseColour = glm::max(dt, 0.0f);
+
+	//specular
+	//glm::vec3 reflect = glm::reflect(-lightDirection, normal);
+	//glm::vec3 camView = glm::normalize(-_ray->m_direction);
+	//float specularColour = glm::pow(glm::max(glm::dot(camView, glm::normalize(reflect)), 0.0f), 50);
+	//specularColour *= specularIntensity;
+
+	//colour = (diffuseColour + specularColour + ambient) * glm::vec3(1.0f) * m_colour;
+
+	colour = (m_colour + glm::vec3(1.0f) * dt) * 0.5f;
+
+	return glm::clamp(colour, glm::vec3(0), glm::vec3(1));
 }
 
 glm::vec3 Sphere::GetNormal(glm::vec3 _pi)

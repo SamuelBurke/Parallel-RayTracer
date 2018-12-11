@@ -4,5 +4,5 @@
 
 Object::Object()
 {
-	//SDL_RenderDrawPoint
+	
 }

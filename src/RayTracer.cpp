@@ -12,7 +12,9 @@ RayTracer::RayTracer()
 
 	m_geometry = std::make_shared<Geometry>();
 
-	m_primaryRay = true;
+	m_primaryRay = 0;
+
+	
 }
 
 // Will test the incoming ray against all objects in the scene.
@@ -20,10 +22,8 @@ glm::vec3 RayTracer::TraceRay(std::shared_ptr<Ray> _ray)
 {
 	glm::vec3 colour = glm::vec3(0, 0, 0);
 	float t;
-	glm::vec3 intersectionPoint;
 
-	//bool primaryRay = true;
-	
+
 	// Find the first object the ray hits.
 	// Go through every object in the scene:
 	// Call the ray-sphere intersection function.
@@ -32,45 +32,29 @@ glm::vec3 RayTracer::TraceRay(std::shared_ptr<Ray> _ray)
 
 	for (size_t i = 0; i < m_objects.size(); i++)
 	{
-		if (m_geometry->Intersect(_ray, intersectionPoint, t, m_objects.at(i)->GetPosition(), m_objects.at(i)->GetRadius()))
+		if (m_geometry->Intersect(_ray, t, m_objects.at(i)->GetPosition(), m_objects.at(i)->GetRadius()))
 		{
 			glm::vec3 pi = _ray->m_origin + _ray->m_direction * t;
+			colour = m_objects.at(i)->Shade(_ray, pi);
 
-
-			glm::vec3 lightDirection = glm::vec3(150.0f, 150.0f, 0.0f) - pi; // The vector here is the light's origin point. -pi in order to get the direction of the light.
-			//glm::vec3 lightDirection = glm::vec3(0.0f, 0.0f, 0.0f) - pi; // The vector here is the light's origin point. -pi in order to get the direction of the light.
-			glm::vec3 normal = m_objects.at(i)->GetNormal(pi);
-			float dt = glm::dot(glm::normalize(lightDirection), glm::normalize(normal));
-
-			colour = (m_objects.at(i)->GetColour() + glm::vec3(1.0f) * dt) * 0.5f;
-
-
-			if (!m_primaryRay)
-			{
-				intersectionPoint = glm::vec3(_ray->m_origin.x, _ray->m_origin.y, t);
 				
-				std::shared_ptr<Ray> reflectRay = std::make_shared<Ray>();
-				reflectRay->m_origin = intersectionPoint;
-				reflectRay->m_direction = glm::reflect(_ray->m_direction, normal);
-				colour += TraceRay(reflectRay);
-			}
+			//if (m_primaryRay > 1)
+			//{
+			//	//std::shared_ptr<Ray> reflectRay = std::make_shared<Ray>();
+			//	_ray->m_origin = pi;
+			//	_ray->m_direction = glm::reflect(_ray->m_direction, normal);
 
-			//reflect ray direction = glm::reflect(raydirection, normal)
-			//shadow ray direction = lightposition - intersect point
+			//	m_primaryRay++;
 
-			//if (rayhits)
-			// if(ray is primary)
-			//	create reflect ray
-			//	origin = intersect point
-			//	direction = glm::reflect(raydirection, normal)
-			//	colour += traceray(reflectray)
+			//	colour += TraceRay(_ray);
 
-			//	create shadow ray
-			//	origin = intersect point
-			//	direction = lightposition - intersect point
-			//	colour += traceray(shadowray)
+			//	//std::shared_ptr<Ray> shadowRay = std::make_shared<Ray>();
+			//	_ray->m_origin = pi;
+			//	_ray->m_direction = lightDirection;
+			//	colour += TraceRay(_ray);
 
-			m_primaryRay = false;
+			//}
+
 			break;
 		}
 		else
@@ -88,7 +72,7 @@ glm::vec3 RayTracer::TraceRay(std::shared_ptr<Ray> _ray)
 	// If the ray didn't hit an object:
 	// Just return a background colour, as done below:
 
-	return glm::clamp(colour, glm::vec3(0), glm::vec3(1));
+	return colour;
 }
 
 void RayTracer::ClampColour(glm::vec3 &_col)
