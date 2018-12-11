@@ -29,6 +29,7 @@ private:
 	std::shared_ptr<Geometry> m_geometry;
 
 	float m_blue;
+	bool m_primaryRay;
 };
 
 #endif // !RAYTRACER_H

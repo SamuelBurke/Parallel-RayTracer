@@ -9,7 +9,7 @@ Geometry::Geometry()
 {
 }
 
-bool Geometry::Intersect(std::shared_ptr<Ray> _ray, float &_t, glm::vec3 _sphereCentre, float _radius)
+bool Geometry::Intersect(std::shared_ptr<Ray> _ray, glm::vec3 &_intersectionPoint, float &_t, glm::vec3 _sphereCentre, float _radius)
 {
 	glm::vec3 originToCentre = _ray->m_origin - _sphereCentre;
 	float b = 2 * glm::dot(originToCentre, _ray->m_direction);

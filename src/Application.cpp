@@ -11,8 +11,8 @@ void Application::Initialise()
 	m_window = std::make_shared<Window>();
 
 	m_debugSphere = std::make_shared<Sphere>();
-	m_debugSphere->SetPosition(glm::vec3(150.0f, 600.0f, -150.0f));
-	m_debugSphere->SetRadius(50.0f);
+	m_debugSphere->SetPosition(glm::vec3(m_window->GetWidth() * 0.5 - 200, m_window->GetHeight() * 0.5 + 200, -150.0f));
+	m_debugSphere->SetRadius(100.0f);
 	m_debugSphere->SetColour(glm::vec3(0, 1, 1));
 
 
@@ -23,7 +23,7 @@ void Application::Initialise()
 			
 	m_sphere2 = std::make_shared<Sphere>();
 	m_sphere2->SetPosition(glm::vec3(m_window->GetWidth() * 0.5 + 160, m_window->GetHeight() * 0.5 - 150, -150.0f)); // Centre point of the sphere.
-	m_sphere2->SetRadius(50.0f);
+	m_sphere2->SetRadius(100.0f);
 	m_sphere2->SetColour(glm::vec3(0, 1, 0)); // Pass in between 0-1 for the colour. This gets converted to 0-255 later.
 
 	m_rayTracer.AddObject(m_debugSphere);

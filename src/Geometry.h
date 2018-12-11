@@ -17,7 +17,7 @@ public:
 
 	//bool RaySphereIntersection(std::shared_ptr<Ray> _ray, glm::vec3 _sphereCentre, float _radius);
 
-	bool Intersect(std::shared_ptr<Ray> _ray, float &_t, glm::vec3 _sphereCentre, float _radius);
+	bool Intersect(std::shared_ptr<Ray> _ray, glm::vec3 &_intersectionPoint, float &_t, glm::vec3 _sphereCentre, float _radius);
 
 	//glm::vec3 
 
