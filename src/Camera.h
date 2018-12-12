@@ -14,6 +14,8 @@ public:
 	std::shared_ptr<Ray> GenerateRay(glm::ivec2 _pos);
 
 
+
+
 };
 
 #endif // !CAMERA_H

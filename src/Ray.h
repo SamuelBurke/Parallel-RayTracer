@@ -8,8 +8,8 @@
 class Ray
 {
 public:
-	glm::vec3 m_origin;
-	glm::vec3 m_direction; // normalised.
+	glm::vec3 mOrigin;
+	glm::vec3 mDirection; // normalised.
 };
 
 #endif // !RAY_H

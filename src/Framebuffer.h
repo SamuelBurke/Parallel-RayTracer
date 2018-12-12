@@ -9,7 +9,7 @@ public:
 	void Tick();
 
 public:
-	Window m_window;
+	Window mWindow;
 };
 
 #endif //!FRAMEBUFFER_H

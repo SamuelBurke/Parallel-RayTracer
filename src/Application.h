@@ -13,21 +13,21 @@ public:
 	void cleanup();
 
 private:
-	bool m_quit;
+	bool mQuit;
 
-	std::shared_ptr<Camera> m_camera;
-	std::shared_ptr<Input> m_input;
-	std::shared_ptr<Window> m_window;
+	std::shared_ptr<Camera> mCamera;
+	std::shared_ptr<Input> mInput;
+	std::shared_ptr<Window> mWindow;
 	//std::shared_ptr<RayTracer> m_rayTracer;
 
-	RayTracer m_rayTracer;
+	RayTracer mRayTracer;
 
 	//Sphere m_sphere;
 	//Sphere m_sphere2;
 
-	std::shared_ptr<Sphere> m_sphere;
-	std::shared_ptr<Sphere> m_sphere2;
-	std::shared_ptr<Sphere> m_debugSphere;
+	std::shared_ptr<Sphere> mSphere;
+	std::shared_ptr<Sphere> mSphere2;
+	std::shared_ptr<Sphere> mDebugSphere;
 
 	//std::shared_ptr<Sphere> m_lightSphere;
 

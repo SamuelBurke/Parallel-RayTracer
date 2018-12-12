@@ -26,9 +26,9 @@ public:
 	glm::vec3 GetNormal(glm::vec3 _pi);
 
 private:
-	glm::vec3 m_position;
-	float m_radius;
-	glm::vec3 m_colour;
+	glm::vec3 mPosition;
+	float mRadius;
+	glm::vec3 mColour;
 };
 
 #endif // !SPHERE_H

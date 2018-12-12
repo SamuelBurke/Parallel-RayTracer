@@ -2,25 +2,25 @@
 
 #include <iostream>
 
-int Window::m_width = 840;
-int Window::m_height = 840;
+int Window::mWidth = 840;
+int Window::mHeight = 840;
 
 void Window::InitWindow()
 {
-	m_window = NULL;
-	m_surface = NULL;
-	m_renderer = NULL;
+	mWindow = NULL;
+	mSurface = NULL;
+	mRenderer = NULL;
 
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
 		std::cout << "Error: Cannot initalise SDL. SDL_Error: " << SDL_GetError();
 	}
 
-	m_window = SDL_CreateWindow("Ray Tracer", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, m_width, m_height, SDL_WINDOW_SHOWN);
+	mWindow = SDL_CreateWindow("Ray Tracer", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, mWidth, mHeight, SDL_WINDOW_SHOWN);
 
-	m_renderer = SDL_CreateRenderer(m_window, -1, 0);
+	mRenderer = SDL_CreateRenderer(mWindow, -1, 0);
 
-	if (!m_renderer)
+	if (!mRenderer)
 	{
 		std::cout << "Error: Renderer is empty. SDL_Error: " << SDL_GetError();
 	}
@@ -41,41 +41,41 @@ void Window::InitWindow()
 
 void Window::PresentRenderer()
 {
-	SDL_RenderPresent(m_renderer);
+	SDL_RenderPresent(mRenderer);
 }
 
 void Window::UpdateSurface()
 {
-	SDL_UpdateWindowSurface(m_window);
+	SDL_UpdateWindowSurface(mWindow);
 }
 
 void Window::DestroyWindow()
 {
-	SDL_DestroyWindow(m_window);
+	SDL_DestroyWindow(mWindow);
 }
 
 
 SDL_Window *Window::GetWindow()
 {
-	return m_window;
+	return mWindow;
 }
 
 SDL_Renderer *Window::GetRenderer()
 {
-	return m_renderer;
+	return mRenderer;
 }
 
 SDL_Surface *Window::GetSurface()
 {
-	return m_surface;
+	return mSurface;
 }
 
 int Window::GetWidth()
 {
-	return m_width;
+	return mWidth;
 }
 
 int Window::GetHeight()
 {
-	return m_height;
+	return mHeight;
 }

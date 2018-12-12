@@ -11,8 +11,8 @@ Geometry::Geometry()
 
 bool Geometry::Intersect(std::shared_ptr<Ray> _ray, float &_t, glm::vec3 _sphereCentre, float _radius)
 {
-	glm::vec3 originToCentre = _ray->m_origin - _sphereCentre;
-	float b = 2 * glm::dot(originToCentre, _ray->m_direction);
+	glm::vec3 originToCentre = _ray->mOrigin - _sphereCentre;
+	float b = 2 * glm::dot(originToCentre, _ray->mDirection);
 	float c = glm::dot(originToCentre, originToCentre) - _radius * _radius;
 
 	float distanceToCentre = b * b - 4 * c;
@@ -55,14 +55,14 @@ glm::vec3 Geometry::ClosestPoint(std::shared_ptr<Ray> _ray, glm::vec3 _query)
 	//	n = Direction of ray, unit vector
 	//	P = position vector. In this case, it's of the query point passed in here.
 	// This gives us the length along the line to the closest point
-	float projectedVector = glm::dot((point - _ray->m_origin), _ray->m_direction);
+	float projectedVector = glm::dot((point - _ray->mOrigin), _ray->mDirection);
 
 	// projectedVector gives us a scalar value. If we want a vector to the closest point, it is this distance along the n.
 	// So, just multiply it by n
 	//result = projectedVector * rayDirection;
 
 	// This means we can now express the closest point X on the line to our query point P as:
-	glm::vec3 X = _ray->m_origin + (projectedVector * _ray->m_direction);
+	glm::vec3 X = _ray->mOrigin + (projectedVector * _ray->mDirection);
 	
 
 	// We can also easily find the vector from X on the line to the point described by P.

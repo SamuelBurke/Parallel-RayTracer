@@ -20,12 +20,12 @@ public:
 	static int GetHeight();
 
 private:
-	static int m_width;
-	static int m_height;
+	static int mWidth;
+	static int mHeight;
 
-	SDL_Window  *m_window;
-	SDL_Renderer  *m_renderer;
-	SDL_Surface *m_surface;
+	SDL_Window *mWindow;
+	SDL_Renderer *mRenderer;
+	SDL_Surface *mSurface;
 };
 
 #endif // !WINDOW_H

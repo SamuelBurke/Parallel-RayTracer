@@ -17,20 +17,19 @@ public:
 	RayTracer();
 
 	glm::vec3 TraceRay(std::shared_ptr<Ray> _ray);
-	void ClampColour(glm::vec3 &_col);
 
 	void AddObject(std::shared_ptr<Sphere> _object);
 
 	void Debug();
 
 private:
-	std::vector<std::shared_ptr<Sphere>> m_objects;
+	std::vector<std::shared_ptr<Sphere>> mObjects;
 
-	std::shared_ptr<Geometry> m_geometry;
+	std::shared_ptr<Geometry> mGeometry;
 
-	float m_blue;
+	float mBlue;
 
-	int m_primaryRay;
+	int mPrimaryRay;
 };
 
 #endif // !RAYTRACER_H

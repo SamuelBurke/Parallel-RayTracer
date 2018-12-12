@@ -10,7 +10,7 @@ public:
 	bool isKeyPressed(SDL_Scancode _keyCode);
 
 private:
-	const Uint8* m_currentKeys;
+	const Uint8* mCurrentKeys;
 };
 
 

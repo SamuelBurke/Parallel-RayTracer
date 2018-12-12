@@ -4,11 +4,12 @@ std::shared_ptr<Ray> Camera::GenerateRay(glm::ivec2 _pos)
 {
 	std::shared_ptr<Ray> ray = std::make_shared<Ray>();
 
-	ray->m_origin.x = _pos.x;
-	ray->m_origin.y = _pos.y;
-	ray->m_origin.z = 0;
+	ray->mOrigin.x = _pos.x;
+	ray->mOrigin.y = _pos.y;
+	ray->mOrigin.z = 0;
 
-	ray->m_direction = glm::vec3(0, 0, -1); // Hard coded direction for now, change later.
+	ray->mDirection = glm::vec3(0, 0, -1); // Hard coded direction for now, change later.
+
 
 	// Needs a viewing matrix - Represent the camera's position and orientation.
 	// Needs a projection matrix - Act like the camera's lens.
