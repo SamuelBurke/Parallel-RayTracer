@@ -7,13 +7,14 @@
 #include <memory>
 
 class Ray;
+class RayTracer;
 
 class Sphere : public Object
 {
 public:
 	Sphere();
 
-	glm::vec3 Shade(std::shared_ptr<Ray> _ray, glm::vec3(_intersection));
+	glm::vec3 Shade(std::shared_ptr<Ray> _ray, RayTracer& _rayTracer, glm::vec3(_intersection), int _count);
 
 	void SetPosition(glm::vec3 _position);
 	void SetRadius(float _radius);

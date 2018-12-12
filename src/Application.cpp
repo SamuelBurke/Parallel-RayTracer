@@ -41,7 +41,7 @@ void Application::Loop()
 		for (int j = 0; j < mWindow->GetHeight(); j++)
 		{
 			std::shared_ptr<Ray> ray = mCamera->GenerateRay(glm::ivec2(i, j));
-			glm::vec3 colour = (mRayTracer.TraceRay(ray) * 255.0f); // convert colour value between 0-1 to 0-255.
+			glm::vec3 colour = (mRayTracer.TraceRay(ray, 2) * 255.0f); // convert colour value between 0-1 to 0-255.
 
 			SDL_SetRenderDrawColor(mWindow->GetRenderer(), colour.x, colour.y, colour.z, 255);
 			SDL_RenderDrawPoint(mWindow->GetRenderer(), i, j);
@@ -61,7 +61,6 @@ void Application::Loop()
 			}
 		}
 
-		mRayTracer.Debug();
 
 		mInput->Tick();
 
