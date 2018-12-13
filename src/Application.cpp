@@ -79,18 +79,13 @@ void Application::Render(int _initialX, int _initalY, int _finalX, int _finalY)
 
 void Application::Loop()
 {
-	//std::thread t[mThreads];
 	std::vector<std::thread> t;
 
 	for (size_t x = 0; x < mWindow->GetWidth(); x += 840)
 	{
 		for (size_t y = 0; y < mWindow->GetHeight(); y += 840)
 		{
-			//for (size_t i = 0; i < mThreads; i++)
-			//{
-				//t[i] = std::thread(&Application::Render, this, x, x + 210, y, y + 210);
-				t.push_back(std::thread(&Application::Render, this, x, y, x + 840, y + 840));
-			//}
+			t.push_back(std::thread(&Application::Render, this, x, y, x + 840, y + 840));
 		}
 	}
 
@@ -100,21 +95,6 @@ void Application::Loop()
 	}
 
 	t.clear();
-
-	//for (size_t i = 0; i < mThreads; i++)
-	//{
-	//	t[i].join();
-	//}
-
-
-
-	//for (size_t x = 0; x < mWindow->GetWidth(); x++)
-	//{
-	//	for (size_t y = 0; y < mWindow->GetHeight(); y++)
-	//	{
-	//		
-	//	}
-	//}
 
 
 	
