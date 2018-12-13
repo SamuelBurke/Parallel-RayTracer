@@ -1,4 +1,11 @@
 #include "Camera.h"
+#include <glm/gtc/matrix_transform.hpp>
+
+Camera::Camera()
+{
+	//mViewMatrix = glm::mat4(1.0f);
+	//mProjectionMatrix = glm::perspective(45.0f, 1.0f, 0.1f, 1000.0f);
+}
 
 std::shared_ptr<Ray> Camera::GenerateRay(glm::ivec2 _pos)
 {
@@ -10,10 +17,6 @@ std::shared_ptr<Ray> Camera::GenerateRay(glm::ivec2 _pos)
 
 	ray->mDirection = glm::vec3(0, 0, -1); // Hard coded direction for now, change later.
 
-
-	// Needs a viewing matrix - Represent the camera's position and orientation.
-	// Needs a projection matrix - Act like the camera's lens.
-
 	// Must go through a number of steps to create a ray from the input pixel coordinates.
 	// Step 1:
 	// Normalised Device Coordinates: Viewing volume is a cube, from -1 to +1 in each dimension.
@@ -21,6 +24,9 @@ std::shared_ptr<Ray> Camera::GenerateRay(glm::ivec2 _pos)
 	// Need to generate coordinates for the start and end points of the ray.
 	// These go from the near plane (z = -1) to the far plane (z = 1).
 	// E.G. Pixel coords (0, 0) map to NDC (-1, 1, -1) on near plane. Pixel coords (0, 0) map to NDC (-1, 1, 1) on far plane.
+
+
+
 	// Step 2:
 	// Convert to Eye Space:
 	// Multiply coordinates by inverse projection matrix. - This is like distorting the cube into the correct perspective volume.

@@ -10,14 +10,8 @@ void Application::Initialise()
 	mInput = std::make_shared<Input>();
 	mWindow = std::make_shared<Window>();
 
-	mDebugSphere = std::make_shared<Sphere>();
-	mDebugSphere->SetPosition(glm::vec3(mWindow->GetWidth() * 0.5 - 200, mWindow->GetHeight() * 0.5 + 200, -150.0f));
-	mDebugSphere->SetRadius(100.0f);
-	mDebugSphere->SetColour(glm::vec3(0, 1, 1));
-
-
 	mSphere = std::make_shared<Sphere>();
-	mSphere->SetPosition(glm::vec3(mWindow->GetWidth() * 0.5, mWindow->GetHeight() * 0.5, -150.0f)); // Centre point of the sphere.
+	mSphere->SetPosition(glm::vec3(mWindow->GetWidth() * 0.2, mWindow->GetHeight() * 0.2, -150.0f)); // Centre point of the sphere.
 	mSphere->SetRadius(100.0f);
 	mSphere->SetColour(glm::vec3(1, 0, 0)); // Pass in between 0-1 for the colour. This gets converted to 0-255 later.
 			
@@ -26,10 +20,14 @@ void Application::Initialise()
 	mSphere2->SetRadius(100.0f);
 	mSphere2->SetColour(glm::vec3(0, 1, 0)); // Pass in between 0-1 for the colour. This gets converted to 0-255 later.
 
-	mRayTracer.AddObject(mDebugSphere);
+	mSphere3 = std::make_shared<Sphere>();
+	mSphere3->SetPosition(glm::vec3(mWindow->GetWidth() * 0.5 - 200, mWindow->GetHeight() * 0.5 + 200, -150.0f));
+	mSphere3->SetRadius(100.0f);
+	mSphere3->SetColour(glm::vec3(0, 1, 1));
 
 	mRayTracer.AddObject(mSphere);
 	mRayTracer.AddObject(mSphere2);
+	mRayTracer.AddObject(mSphere3);
 	   	 
 	mWindow->InitWindow();
 }
