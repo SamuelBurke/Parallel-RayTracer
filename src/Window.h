@@ -3,17 +3,16 @@
 
 #include <SDL2/SDL.h>
 
+//! Handles all window related code. Called from application.
 class Window
 {
 public:
 	void InitWindow();
-	void UpdateSurface();
 	void PresentRenderer();
 
 	void DestroyWindow();
 
 	SDL_Window  *GetWindow();
-	SDL_Surface *GetSurface();
 	SDL_Renderer *GetRenderer();
 
 	static int GetWidth();
@@ -25,7 +24,6 @@ private:
 
 	SDL_Window *mWindow;
 	SDL_Renderer *mRenderer;
-	SDL_Surface *mSurface;
 };
 
 #endif // !WINDOW_H

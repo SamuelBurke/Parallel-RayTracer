@@ -6,12 +6,13 @@
 #include <memory>
 #include <glm/glm.hpp>
 
-// Has viewing properties.
-// Routine to generate a ray.
+//! Has viewing properties - Used to generate the rays.
 class Camera
 {
 public:
 	Camera();
+
+	// Called in application for each ray. Sets the ray's origin & direction.
 	std::shared_ptr<Ray> GenerateRay(glm::ivec2 _pos);
 
 private:

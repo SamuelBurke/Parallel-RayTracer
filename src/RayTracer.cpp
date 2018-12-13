@@ -27,7 +27,7 @@ glm::vec3 RayTracer::TraceRay(std::shared_ptr<Ray> _ray, int _count)
 
 	for (size_t i = 0; i < mObjects.size(); i++)
 	{
-		if (mGeometry->Intersect(_ray, t, mObjects.at(i)->GetPosition(), mObjects.at(i)->GetRadius()))
+		if (mGeometry->RaySphereIntersect(_ray, t, mObjects.at(i)->GetPosition(), mObjects.at(i)->GetRadius()))
 		{
 			glm::vec3 pi = _ray->mOrigin + _ray->mDirection * t;
 			colour = mObjects.at(i)->Shade(_ray, *this, pi, _count);
@@ -53,7 +53,7 @@ glm::vec3 RayTracer::TraceRay(std::shared_ptr<Ray> _ray, int _count)
 }
 
 
-void RayTracer::AddObject(std::shared_ptr<Sphere> _object)
+void RayTracer::AddObject(std::shared_ptr<Object> _object)
 {
 	mObjects.push_back(_object);
 }

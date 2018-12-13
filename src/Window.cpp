@@ -8,7 +8,6 @@ int Window::mHeight = 840;
 void Window::InitWindow()
 {
 	mWindow = NULL;
-	mSurface = NULL;
 	mRenderer = NULL;
 
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -23,20 +22,7 @@ void Window::InitWindow()
 	if (!mRenderer)
 	{
 		std::cout << "Error: Renderer is empty. SDL_Error: " << SDL_GetError();
-	}
-
-	//if (m_window == NULL)
-	//{
-	//	std::cout << "Error: Window could not be created. SDL_Error: " << SDL_GetError();
-	//}
-	//else
-	//{
-	//	m_surface = SDL_GetWindowSurface(m_window);
-
-	//	SDL_FillRect(m_surface, NULL, SDL_MapRGB(m_surface->format, 0, 0, 28));
-	//}
-
-	
+	}	
 }
 
 void Window::PresentRenderer()
@@ -44,16 +30,10 @@ void Window::PresentRenderer()
 	SDL_RenderPresent(mRenderer);
 }
 
-void Window::UpdateSurface()
-{
-	SDL_UpdateWindowSurface(mWindow);
-}
-
 void Window::DestroyWindow()
 {
 	SDL_DestroyWindow(mWindow);
 }
-
 
 SDL_Window *Window::GetWindow()
 {
@@ -63,11 +43,6 @@ SDL_Window *Window::GetWindow()
 SDL_Renderer *Window::GetRenderer()
 {
 	return mRenderer;
-}
-
-SDL_Surface *Window::GetSurface()
-{
-	return mSurface;
 }
 
 int Window::GetWidth()

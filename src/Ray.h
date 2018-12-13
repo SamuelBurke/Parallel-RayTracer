@@ -3,13 +3,12 @@
 
 #include <glm/glm.hpp>
 
-//Ray Class
-//Ray-object intersection routines.
+//! Simply has two public variables. The origin and the direction of the ray.
 class Ray
 {
 public:
 	glm::vec3 mOrigin;
-	glm::vec3 mDirection; // normalised.
+	glm::vec3 mDirection;
 };
 
 #endif // !RAY_H
