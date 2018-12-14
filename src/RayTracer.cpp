@@ -8,46 +8,32 @@
 
 RayTracer::RayTracer()
 {
-	mBlue = 0.109375f;
-
+	mBlue = 0.109375f; // Since the colours are from 0-1, this value is 28/255. 28 is the value of a preferred background shade of blue.
 	mGeometry = std::make_shared<Geometry>();
 }
 
-// Will test the incoming ray against all objects in the scene.
 glm::vec3 RayTracer::TraceRay(std::shared_ptr<Ray> _ray, int _count)
 {
 	glm::vec3 colour = glm::vec3(0, 0, 0);
 	float t;
 
-	// Find the first object the ray hits.
-	// Go through every object in the scene:
-	// Call the ray-sphere intersection function.
-	// If it hits the objects, record the distance from the ray's origin to the intersection point.
-	// Want the object with the shortest distance.
-
-	for (size_t i = 0; i < mObjects.size(); i++)
+	for (size_t i = 0; i < mObjects.size(); i++) // Iterate through each object.
 	{
-		if (mGeometry->RaySphereIntersect(_ray, t, mObjects.at(i)->GetPosition(), mObjects.at(i)->GetRadius()))
+		if (mGeometry->RaySphereIntersect(_ray, t, mObjects.at(i)->GetPosition(), mObjects.at(i)->GetRadius())) // Check if the ray intersects with the sphere.
 		{
-			glm::vec3 pi = _ray->mOrigin + _ray->mDirection * t;
-			colour = mObjects.at(i)->Shade(_ray, *this, pi, _count);
+			// t is the distance from the closest point of the ray to the radius of the sphere. The value gets returned from the function called above.
+			glm::vec3 pointOfIntersection = _ray->mOrigin + _ray->mDirection * t; // Calculate the point of intersection using the ray's values and the t value.
+			colour = mObjects.at(i)->Shade(_ray, *this, pointOfIntersection, _count); // Set the colour of the ray by calling the shade function and passing the point of intersection into it.
 
-			break;
+			break; // Break out of the for loop for this particular ray.
 		}
 		else
 		{
-			glm::vec3 bkgcolour = glm::vec3(0, 0, mBlue);
+			glm::vec3 bkgcolour = glm::vec3(0, 0, mBlue); // Used the blue background shade defined in the constructor.
 			colour = bkgcolour;
 
 		}
 	}
-
-	// If the ray hits an object:
-	// Call that object's shading method.
-	// Return the pixel colour.
-
-	// If the ray didn't hit an object:
-	// Just return a background colour, as done below:
 
 	return colour;
 }

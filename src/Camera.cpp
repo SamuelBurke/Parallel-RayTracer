@@ -25,8 +25,6 @@ std::shared_ptr<Ray> Camera::GenerateRay(glm::ivec2 _pos)
 	// These go from the near plane (z = -1) to the far plane (z = 1).
 	// E.G. Pixel coords (0, 0) map to NDC (-1, 1, -1) on near plane. Pixel coords (0, 0) map to NDC (-1, 1, 1) on far plane.
 
-
-
 	// Step 2:
 	// Convert to Eye Space:
 	// Multiply coordinates by inverse projection matrix. - This is like distorting the cube into the correct perspective volume.

@@ -30,7 +30,7 @@ private:
 
 	bool mQuit; // boolean variable used for the main while loop. Initalised as false. 
 
-	static const int mThreads = 4; // int variable used to specify the number of threads the program will use.
+	std::vector<std::thread> mThreads; // int variable used to specify the number of threads the program will use.
 	std::mutex mMutex;
 
 	std::shared_ptr<Camera> mCamera; // pointer variable to the camera class, allows use of the 'GenerateRay' function.
@@ -45,8 +45,13 @@ private:
 	std::shared_ptr<Sphere> mSphere4;
 	std::shared_ptr<Sphere> mSphere5;
 	std::shared_ptr<Sphere> mSphere6;
+	std::shared_ptr<Sphere> mSphere7;
+	std::shared_ptr<Sphere> mSphere8;
+	std::shared_ptr<Sphere> mSphere9;
 
 	std::shared_ptr<Sphere> mLightSphere;
+
+	float mTime;
 };
 
 #endif // !APPLICATION_H

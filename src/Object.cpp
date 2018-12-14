@@ -7,12 +7,12 @@ Object::Object()
 
 glm::vec3 Object::GetNormal(glm::vec3 _pi)
 {
-	return glm::vec3(0);
+	return glm::vec3(0); // Just to keep the compiler happy. This function will be overrided by the child classes(Sphere).
 }
 
 glm::vec3 Object::Shade(std::shared_ptr<Ray> _ray, RayTracer& _rayTracer, glm::vec3(_intersection), int _count)
 {
-	return glm::vec3(0);
+	return glm::vec3(0); // Same as above, always overrided.
 }
 
 void Object::SetPosition(glm::vec3 _position)

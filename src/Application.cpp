@@ -4,11 +4,14 @@
 
 void Application::Initialise()
 {
-	mQuit = false;
-
 	mCamera = std::make_shared<Camera>(); // make_shared Allows use of each pointer.
 	mInput = std::make_shared<Input>();
 	mWindow = std::make_shared<Window>();
+
+	mWindow->InitWindow();
+
+	mQuit = false;
+
 
 	mSphere = std::make_shared<Sphere>();
 	mSphere->SetPosition(glm::vec3(150.0f, 150.0f, -150.0f)); // Centre point of the sphere.
@@ -40,6 +43,21 @@ void Application::Initialise()
 	mSphere6->SetRadius(100.0f);
 	mSphere6->SetColour(glm::vec3(0, 0, 1));
 
+	mSphere7 = std::make_shared<Sphere>();
+	mSphere7->SetPosition(glm::vec3(150.0f, 690.0f, -150.0f));
+	mSphere7->SetRadius(120);
+	mSphere7->SetColour(glm::vec3(0.9, 0.6, 0));
+
+	mSphere8 = std::make_shared<Sphere>();
+	mSphere8->SetPosition(glm::vec3(mWindow->GetWidth() * 0.5, 690.0f, -150.0f));
+	mSphere8->SetRadius(120);
+	mSphere8->SetColour(glm::vec3(0, 0.8, 0.5));
+
+	mSphere9 = std::make_shared<Sphere>();
+	mSphere9->SetPosition(glm::vec3(690.0f, 690.0f, -150.0f));
+	mSphere9->SetRadius(120);
+	mSphere9->SetColour(glm::vec3(0, 0.2, 0.5));
+
 	mLightSphere = std::make_shared<Sphere>();
 	mLightSphere->SetPosition(glm::vec3(320.0f, 280.0f, -10.0f));
 	mLightSphere->SetRadius(25.0f);
@@ -53,79 +71,82 @@ void Application::Initialise()
 	mRayTracer.AddObject(mSphere4);
 	mRayTracer.AddObject(mSphere5);
 	mRayTracer.AddObject(mSphere6);
-
-	   	 
-	mWindow->InitWindow();
+	mRayTracer.AddObject(mSphere7);
+	mRayTracer.AddObject(mSphere8);
+	mRayTracer.AddObject(mSphere9);	   	 
 }
 
-// Takes in an initalX/Y & finalX/Y 
+// Takes in an initalX/Y & finalX/Y, each thread will have a different inital x/y and final x/y, allowing threads to work on different parts of the screen.
 void Application::Render(int _initialX, int _initalY, int _finalX, int _finalY)
 {
-	for (int i = _initialX; i < _finalX; i++)
+	for (int i = _initialX; i < _finalX; i++) // Width values.
 	{
-		for (int j = _initalY; j < _finalY; j++)
+		for (int j = _initalY; j < _finalY; j++) // Height values.
 		{
-			std::shared_ptr<Ray> ray = mCamera->GenerateRay(glm::ivec2(i, j));
-			glm::vec3 colour = (mRayTracer.TraceRay(ray, 2) * 255.0f); // convert colour value between 0-1 to 0-255.
+			std::shared_ptr<Ray> ray = mCamera->GenerateRay(glm::ivec2(i, j)); // Create a new ray for the pixel coordinates currently at.
+			glm::vec3 colour = (mRayTracer.TraceRay(ray, 2) * 255.0f); // Convert the colour value returned from 'TraceRay' from 0-1 to 0-255
 
 			mMutex.lock();
-			SDL_SetRenderDrawColor(mWindow->GetRenderer(), colour.x, colour.y, colour.z, 255);
-			SDL_RenderDrawPoint(mWindow->GetRenderer(), i, j);
+			SDL_SetRenderDrawColor(mWindow->GetRenderer(), colour.x, colour.y, colour.z, 255); // Sets the colour using the colour variable set above.
+			SDL_RenderDrawPoint(mWindow->GetRenderer(), i, j); // Draws the pixel.
 			mMutex.unlock();
-
 		}
 	}
 }
 
 void Application::Loop()
-{
-	std::vector<std::thread> t;
+{  
+	//Render(0, 0, mWindow->GetWidth(), mWindow->GetHeight()); // Without Multithreading.
 
-	for (size_t x = 0; x < mWindow->GetWidth(); x += 840)
+	int final = mWindow->GetWidth() * 0.5f;
+	for (size_t x = 0; x < mWindow->GetWidth(); x += final) // X value.
 	{
-		for (size_t y = 0; y < mWindow->GetHeight(); y += 840)
+		for (size_t y = 0; y < mWindow->GetHeight(); y += final) // Y value.
 		{
-			t.push_back(std::thread(&Application::Render, this, x, y, x + 840, y + 840));
+			//Creates a thread, calls the 'Render' function from the thread, and pushes the thread back to the 'mThreads' variable.
+			mThreads.push_back(std::thread(&Application::Render, this, x, y, x + final, y + final)); 
 		}
 	}
+	std::cout << "Number of threads: " << mThreads.size() << std::endl; // Outputs the number of threads to the console.
 
-	for (size_t i = 0; i < t.size(); i++)
+	for (size_t i = 0; i < mThreads.size(); i++)
 	{
-		t.at(i).join();
+		mThreads.at(i).join(); // Join each thread back to this loop.
 	}
+	mThreads.clear(); // Clear the vector after they have all been used.
 
-	t.clear();
+	mTime = SDL_GetTicks(); // Fetch the number of milliseconds since SDL was initalised.
+	mTime = mTime / 1000.0f; // Divide by 1000 to convert to seconds.
 
-
+	std::cout << "Time since initialisation: " << mTime << " seconds" << std::endl; // Outputs the time taken to render the scene.
 	
-	while (!mQuit)
+	while (!mQuit) // Main loop - Since the program only renders once, this just keeps the window open.
 	{
 		SDL_Event e = { 0 };
 
 		while (SDL_PollEvent(&e))
 		{
-			if (e.type == SDL_QUIT)
+			if (e.type == SDL_QUIT) // Quits if the user clicks the red X in the corner of the window.
 			{
 				mQuit = true;
 			}
 		}
 
+		mInput->Tick(); // Call 'Tick' of the input, allows the following function:
 
-		mInput->Tick();
-
-		if (mInput->isKeyPressed(SDL_SCANCODE_ESCAPE))
+		if (mInput->isKeyPressed(SDL_SCANCODE_ESCAPE)) // If the current key variable of Input matches this Esc keycode, true will be returned and the program will end.
 		{
 			mQuit = true;
 		}
 
-		mWindow->PresentRenderer();
+		mWindow->PresentRenderer(); // Present the renderer each frame. This doesn't need to be called in this loop, but would be if anything was to update during the application's run time.
 	}
 
-	cleanup();
+	cleanup(); // Reaching this point means the main loop has been left, and the program needs to close.
 }
 
 void Application::cleanup()
 {
-	mWindow->DestroyWindow();
+	mWindow->DestroyWindow(); // Deletes the window and calls the SDL_Quit function.
 	SDL_Quit();
 }
